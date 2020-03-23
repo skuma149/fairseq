@@ -2,7 +2,6 @@ import json
 import torch
 from fairseq.models.roberta import RobertaModel
 from examples.roberta import commonsense_qa  # load the Commonsense QA task
-print("all fine till here")
 roberta = RobertaModel.from_pretrained(model_name_or_path='roberta.large.mnli',data_name_or_path='./data/CommonsenseQA')
 roberta.eval()  # disable dropout
 roberta.cuda()  # use the GPU (optional)
