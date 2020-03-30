@@ -82,7 +82,9 @@ def save_checkpoint(args, trainer, epoch_itr, val_loss):
                 checkpoints[0], epoch, updates, val_loss, write_timer.sum
             )
         )
-
+    args.keep_interval_updates = 1
+    args.keep_last_epochs = 1
+    args.keep_best_checkpoints = 1
     if not end_of_epoch and args.keep_interval_updates > 0:
         # remove old checkpoints; checkpoints are sorted in descending order
         checkpoints = checkpoint_paths(
