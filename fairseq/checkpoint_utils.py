@@ -85,31 +85,31 @@ def save_checkpoint(args, trainer, epoch_itr, val_loss):
     args.keep_interval_updates = 1
     args.keep_last_epochs = 1
     args.keep_best_checkpoints = 1
-    if not end_of_epoch and args.keep_interval_updates > 0:
-        # remove old checkpoints; checkpoints are sorted in descending order
-        checkpoints = checkpoint_paths(
-            args.save_dir, pattern=r"checkpoint_\d+_(\d+)\.pt"
-        )
-        for old_chk in checkpoints[args.keep_interval_updates :]:
-            if os.path.lexists(old_chk):
-                os.remove(old_chk)
+    #if not end_of_epoch and args.keep_interval_updates > 0:
+    # remove old checkpoints; checkpoints are sorted in descending order
+    checkpoints = checkpoint_paths(
+        args.save_dir, pattern=r"checkpoint_\d+_(\d+)\.pt"
+    )
+    for old_chk in checkpoints[args.keep_interval_updates :]:
+        if os.path.lexists(old_chk):
+            os.remove(old_chk)
 
-    if args.keep_last_epochs > 0:
-        # remove old epoch checkpoints; checkpoints are sorted in descending order
-        checkpoints = checkpoint_paths(args.save_dir, pattern=r"checkpoint(\d+)\.pt")
-        for old_chk in checkpoints[args.keep_last_epochs :]:
-            if os.path.lexists(old_chk):
-                os.remove(old_chk)
+    #if args.keep_last_epochs > 0:
+    # remove old epoch checkpoints; checkpoints are sorted in descending order
+    checkpoints = checkpoint_paths(args.save_dir, pattern=r"checkpoint(\d+)\.pt")
+    for old_chk in checkpoints[args.keep_last_epochs :]:
+        if os.path.lexists(old_chk):
+            os.remove(old_chk)
 
-    if args.keep_best_checkpoints > 0:
-        # only keep the best N checkpoints according to validation metric
-        checkpoints = checkpoint_paths(
-            args.save_dir, pattern=r"checkpoint\.best_{}_(\d+\.?\d*)\.pt".format(args.best_checkpoint_metric))
-        if not args.maximize_best_checkpoint_metric:
-            checkpoints = checkpoints[::-1]
-        for old_chk in checkpoints[args.keep_best_checkpoints:]:
-            if os.path.lexists(old_chk):
-                os.remove(old_chk)
+    #if args.keep_best_checkpoints > 0:
+    # only keep the best N checkpoints according to validation metric
+    checkpoints = checkpoint_paths(
+        args.save_dir, pattern=r"checkpoint\.best_{}_(\d+\.?\d*)\.pt".format(args.best_checkpoint_metric))
+    if not args.maximize_best_checkpoint_metric:
+        checkpoints = checkpoints[::-1]
+    for old_chk in checkpoints[args.keep_best_checkpoints:]:
+        if os.path.lexists(old_chk):
+            os.remove(old_chk)
 
 
 def load_checkpoint(args, trainer, **passthrough_args):
