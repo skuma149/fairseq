@@ -1,0 +1,1 @@
+from . import cosmos_qa_task
